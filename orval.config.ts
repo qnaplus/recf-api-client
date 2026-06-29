@@ -9,7 +9,8 @@ export default defineConfig({
             target: "src",
             client: "fetch",
             namingConvention: "kebab-case",
-            formatter: "oxfmt"
+            formatter: "oxfmt",
+            tagsSplitDeduplication: true
         }
     },
 });

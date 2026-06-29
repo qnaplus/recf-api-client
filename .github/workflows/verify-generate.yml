@@ -1,0 +1,38 @@
+name: Verify generated client
+
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+    branches:
+        - master
+
+jobs:
+  verify-generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Regenerate client
+        run: pnpm generate
+
+      - name: Verify no changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Running 'pnpm generate' produced changes. Please run it locally and commit the result."
+            git status --porcelain
+            git --no-pager diff
+            exit 1
+          fi

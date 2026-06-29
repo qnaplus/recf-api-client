@@ -7,7 +7,9 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "generate": "tsx scripts/fetch-openapi.ts && orval --clean && orval",
+    "download_spec": "tsx scripts/fetch-openapi.ts",
+    "generate": "pnpm download_spec && orval",
+    "generate:clean": "orval --clean && pnpm generate",
     "clean": "rm -rf dist openapi.json",
     "build": "tsc",
     "build:clean": "pnpm clean && pnpm build"
