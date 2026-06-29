@@ -32,5 +32,6 @@
     "rest-client",
     "api-client",
     "typescript"
-  ]
+  ],
+  "files": ["dist"]
 }
