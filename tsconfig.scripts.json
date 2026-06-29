@@ -1,0 +1,11 @@
+{
+  // Type-checks the scripts folder without emitting any build output.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": [
+        "node"
+    ],
+  },
+  "include": ["scripts"]
+}
