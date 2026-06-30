@@ -45,8 +45,8 @@ export const getListQaUrl = (slug: string, params?: ListQaParams) => {
 	const stringifiedParams = normalizedParams.toString();
 
 	return stringifiedParams.length > 0
-		? `https://games.recf.org/api/v1/openapi.json/programs/${slug}/qa?${stringifiedParams}`
-		: `https://games.recf.org/api/v1/openapi.json/programs/${slug}/qa`;
+		? `https://games.recf.org/api/v1/programs/${slug}/qa?${stringifiedParams}`
+		: `https://games.recf.org/api/v1/programs/${slug}/qa`;
 };
 
 /**
@@ -88,7 +88,7 @@ export type getQaResponseError = getQaResponse404 & {
 export type getQaResponse = getQaResponseSuccess | getQaResponseError;
 
 export const getGetQaUrl = (slug: string, qnaNumber: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/qa/${qnaNumber}`;
+	return `https://games.recf.org/api/v1/programs/${slug}/qa/${qnaNumber}`;
 };
 
 /**
@@ -130,7 +130,7 @@ export type getQaRssResponseError = getQaRssResponse404 & {
 export type getQaRssResponse = getQaRssResponseSuccess | getQaRssResponseError;
 
 export const getGetQaRssUrl = (slug: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/qa.rss`;
+	return `https://games.recf.org/api/v1/programs/${slug}/qa.rss`;
 };
 
 /**
@@ -184,8 +184,8 @@ export const getListRuleQaUrl = (slug: string, stableKey: string, params?: ListR
 	const stringifiedParams = normalizedParams.toString();
 
 	return stringifiedParams.length > 0
-		? `https://games.recf.org/api/v1/openapi.json/programs/${slug}/rules/${stableKey}/qa?${stringifiedParams}`
-		: `https://games.recf.org/api/v1/openapi.json/programs/${slug}/rules/${stableKey}/qa`;
+		? `https://games.recf.org/api/v1/programs/${slug}/rules/${stableKey}/qa?${stringifiedParams}`
+		: `https://games.recf.org/api/v1/programs/${slug}/rules/${stableKey}/qa`;
 };
 
 /**

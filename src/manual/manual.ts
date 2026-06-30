@@ -36,7 +36,7 @@ export type getLatestManualResponseError = (
 export type getLatestManualResponse = getLatestManualResponseError;
 
 export const getGetLatestManualUrl = (slug: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual`;
+	return `https://games.recf.org/api/v1/programs/${slug}/manual`;
 };
 
 /**
@@ -77,7 +77,7 @@ export type getManualResponseError = getManualResponse404 & {
 export type getManualResponse = getManualResponseSuccess | getManualResponseError;
 
 export const getGetManualUrl = (slug: string, version: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}`;
+	return `https://games.recf.org/api/v1/programs/${slug}/manual/${version}`;
 };
 
 /**
@@ -119,7 +119,7 @@ export type getManualBundleResponseError = getManualBundleResponse404 & {
 export type getManualBundleResponse = getManualBundleResponseSuccess | getManualBundleResponseError;
 
 export const getGetManualBundleUrl = (slug: string, version: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/bundle`;
+	return `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/bundle`;
 };
 
 /**
@@ -161,7 +161,7 @@ export type getChangelogResponseError = getChangelogResponse404 & {
 export type getChangelogResponse = getChangelogResponseSuccess | getChangelogResponseError;
 
 export const getGetChangelogUrl = (slug: string, version: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/changelog`;
+	return `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/changelog`;
 };
 
 /**
@@ -214,8 +214,8 @@ export const getSearchManualUrl = (slug: string, version: string, params?: Searc
 	const stringifiedParams = normalizedParams.toString();
 
 	return stringifiedParams.length > 0
-		? `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/search?${stringifiedParams}`
-		: `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/search`;
+		? `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/search?${stringifiedParams}`
+		: `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/search`;
 };
 
 /**
@@ -273,8 +273,8 @@ export const getExportManualPdfUrl = (
 	const stringifiedParams = normalizedParams.toString();
 
 	return stringifiedParams.length > 0
-		? `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/export.pdf?${stringifiedParams}`
-		: `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/export.pdf`;
+		? `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/export.pdf?${stringifiedParams}`
+		: `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/export.pdf`;
 };
 
 /**
@@ -316,7 +316,7 @@ export type getRuleResponseError = getRuleResponse404 & {
 export type getRuleResponse = getRuleResponseSuccess | getRuleResponseError;
 
 export const getGetRuleUrl = (slug: string, version: string, stableKey: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/rules/${stableKey}`;
+	return `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/rules/${stableKey}`;
 };
 
 /**
@@ -359,7 +359,7 @@ export type getDefinitionResponseError = getDefinitionResponse404 & {
 export type getDefinitionResponse = getDefinitionResponseSuccess | getDefinitionResponseError;
 
 export const getGetDefinitionUrl = (slug: string, version: string, stableKey: string) => {
-	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}/manual/${version}/definitions/${stableKey}`;
+	return `https://games.recf.org/api/v1/programs/${slug}/manual/${version}/definitions/${stableKey}`;
 };
 
 /**

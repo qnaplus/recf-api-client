@@ -7,7 +7,7 @@ export default defineConfig({
         output: {
             mode: "tags-split",
             target: "src",
-            baseUrl: config.spec_url,
+            baseUrl: config.base_url,
             client: "fetch",
             namingConvention: "kebab-case",
             formatter: "oxfmt",
