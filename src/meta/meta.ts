@@ -19,7 +19,7 @@ export type getOpenApiSpecResponseSuccess = getOpenApiSpecResponse200 & {
 export type getOpenApiSpecResponse = getOpenApiSpecResponseSuccess;
 
 export const getGetOpenApiSpecUrl = () => {
-	return `https://games.recf.org/api/v1/openapi.json/openapi.json`;
+	return `https://games.recf.org/api/v1/openapi.json`;
 };
 
 /**

@@ -1,4 +1,7 @@
+const BASE_URL = "https://games.recf.org/api/v1";
+
 export default {
-    "spec_url": "https://games.recf.org/api/v1/openapi.json",
-    "output_file": "openapi.json"
+    base_url: BASE_URL,
+    spec_url: `${BASE_URL}/openapi.json`,
+    output_file: "openapi.json"
 }
