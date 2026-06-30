@@ -6,7 +6,6 @@
     "target": "es2022",
     "declaration": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "strict": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,

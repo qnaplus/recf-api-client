@@ -9,17 +9,20 @@
   "scripts": {
     "download_spec": "tsx scripts/fetch-openapi.ts",
     "generate": "pnpm download_spec && orval",
-    "generate:clean": "orval --clean && pnpm generate",
-    "clean": "rm -rf dist openapi.json",
+    "generate:clean": "orval --clean && rm openapi.json pnpm generate",
+    "clean": "rm -rf dist",
     "build": "tsc",
-    "build:clean": "pnpm clean && pnpm build"
+    "build:clean": "pnpm clean && pnpm build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
     "orval": "^8.19.0",
     "oxfmt": "^0.56.0",
     "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
   },
   "volta": {
     "node": "26.4.0",
@@ -33,5 +36,7 @@
     "api-client",
     "typescript"
   ],
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }
