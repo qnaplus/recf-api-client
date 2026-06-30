@@ -6,6 +6,9 @@
   "license": "MIT",
   "main": "dist/index.js",
   "type": "commonjs",
+  "repository": {
+    "url": "git+https://github.com/qnaplus/recf-api-client"
+  },
   "scripts": {
     "download_spec": "tsx scripts/fetch-openapi.ts",
     "generate": "pnpm download_spec && orval",
