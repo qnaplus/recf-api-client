@@ -15,6 +15,16 @@ The client is generated from the upstream OpenAPI specification using [orval](ht
 
 ## Usage
 
+Many endpoints are scoped to a program, identified by its `slug`. The available RECF programs are:
+
+| Slug | Program |
+| --- | --- |
+| `achieve` | Achieve |
+| `inspire` | Inspire |
+| `engage` | Engage |
+
+You can also fetch the full list at runtime with `listPrograms()`.
+
 ### Installation
 
 ```bash
@@ -40,11 +50,11 @@ if (status === 200) {
 ```ts
 import { getManual, getLatestManual } from "recf-api-client";
 
-// Resolve the latest manual version for a program (e.g. "v5rc")
-const latest = await getLatestManual("v5rc");
+// Resolve the latest manual version for a program (one of "achieve", "inspire", "engage")
+const latest = await getLatestManual("achieve");
 
 // Fetch a specific manual version
-const { data: manual, status } = await getManual("v5rc", "1.0");
+const { data: manual, status } = await getManual("achieve", "1.0");
 
 if (status === 200) {
   console.log(manual);
@@ -56,7 +66,7 @@ if (status === 200) {
 ```ts
 import { searchManual } from "recf-api-client";
 
-const { data: results } = await searchManual("v5rc", "1.0", {
+const { data: results } = await searchManual("inspire", "1.0", {
   q: "robot size",
 });
 
@@ -68,10 +78,10 @@ console.log(results);
 ```ts
 import { listQa, getQa } from "recf-api-client";
 
-const { data: questions } = await listQa("v5rc");
+const { data: questions } = await listQa("engage");
 
 // Fetch a single Q&A entry by its number
-const { data: entry } = await getQa("v5rc", "1234");
+const { data: entry } = await getQa("engage", "1234");
 
 console.log(entry);
 ```
@@ -81,12 +91,72 @@ console.log(entry);
 Every endpoint resolves to an object containing the parsed body, HTTP status, and response headers:
 
 ```ts
-const { data, status, headers } = await getManual("v5rc", "1.0");
+const { data, status, headers } = await getManual("achieve", "1.0");
 ```
 
 The `data` type is narrowed by `status`, so checking the status code gives you the correct success or error payload type.
 
 > **Note:** the generated functions request relative paths (e.g. `/programs/{slug}/manual`). In a non-browser environment you may need to supply a base URL via a global `fetch` configuration or a custom `RequestInit`.
+
+### Caching with ETags
+
+The API is read-only and cacheable, so most responses include an `ETag` header that uniquely identifies the current version of a resource. By sending that value back on a later request via the `If-None-Match` header, the server can respond with `304 Not Modified` (and an empty body) instead of re-sending unchanged data — saving bandwidth and helping you stay within the per-IP rate limits.
+
+Because every endpoint accepts a standard `RequestInit` and returns the response `headers`, you can drive this flow yourself:
+
+```ts
+import { getManual } from "recf-api-client";
+
+// 1. First request — capture the ETag from the response headers.
+const first = await getManual("achieve", "1.0");
+const etag = first.headers.get("etag");
+
+// ... later, revalidate using the stored ETag.
+const next = await getManual("achieve", "1.0", {
+  headers: etag ? { "If-None-Match": etag } : {},
+});
+
+if (next.status === 304) {
+  // Nothing changed — keep using the previously fetched data.
+  console.log("Manual unchanged, using cached copy.");
+} else if (next.status === 200) {
+  // Updated content — refresh your cache and the stored ETag.
+  console.log(next.data);
+}
+```
+
+A small reusable helper makes this convenient across calls:
+
+```ts
+const etagCache = new Map<string, { etag: string; data: unknown }>();
+
+async function cachedGetManual(slug: string, version: string) {
+  const key = `${slug}/${version}`;
+  const cached = etagCache.get(key);
+
+  const res = await getManual(slug, version, {
+    headers: cached ? { "If-None-Match": cached.etag } : {},
+  });
+
+  if (res.status === 304 && cached) {
+    return cached.data;
+  }
+
+  if (res.status === 200) {
+    const etag = res.headers.get("etag");
+    if (etag) {
+      etagCache.set(key, { etag, data: res.data });
+    }
+    return res.data;
+  }
+
+  throw new Error(`Request failed with status ${res.status}`);
+}
+```
+
+For sustained usage, it might be more ideal for you to store the E-Tag in a database/persistent cache.
+
+> **Note:** when the client receives a `304` response it returns a `null` body, so always fall back to your stored copy for that case. In the browser, the native `fetch` cache may already perform ETag revalidation for you — manual handling is most useful in Node.js or when you maintain your own cache.
 
 ---
 
