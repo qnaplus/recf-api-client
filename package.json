@@ -1,6 +1,6 @@
 {
   "name": "recf-api-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "battlesqui_d",
   "description": "Typescript client library for the RECF Rest API",
   "license": "MIT",

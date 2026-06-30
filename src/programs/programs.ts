@@ -19,7 +19,7 @@ export type listProgramsResponseSuccess = listProgramsResponse200 & {
 export type listProgramsResponse = listProgramsResponseSuccess;
 
 export const getListProgramsUrl = () => {
-	return `/programs`;
+	return `https://games.recf.org/api/v1/openapi.json/programs`;
 };
 
 /**
@@ -57,7 +57,7 @@ export type getProgramResponseError = getProgramResponse404 & {
 export type getProgramResponse = getProgramResponseSuccess | getProgramResponseError;
 
 export const getGetProgramUrl = (slug: string) => {
-	return `/programs/${slug}`;
+	return `https://games.recf.org/api/v1/openapi.json/programs/${slug}`;
 };
 
 /**
